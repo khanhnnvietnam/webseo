@@ -2,6 +2,7 @@
 
 import type { FC, ReactNode } from 'react';
 import type { SeoData, SeoStatus, SeoCheck } from '@/lib/types';
+import html2pdf from 'html2pdf.js';
 
 import { CheckCircle2, Download, GaugeCircle, MessageCircleWarning, Server, Smartphone, Tags, XCircle, Link, FileText, Code, Globe } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -94,8 +95,19 @@ const ReportItem: FC<{ check: SeoCheck<any>; title: ReactNode }> = ({ check, tit
 );
 
 export function ReportClient({ data }: { data: SeoData }) {
-  const handlePrint = () => {
-    window.print();
+  const handleDownload = () => {
+    const element = document.getElementById('printable-area');
+    if (element) {
+        const sanitizedUrl = data.url.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+        const opt = {
+            margin:       0.5,
+            filename:     `bao_cao_seo_${sanitizedUrl}.pdf`,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true },
+            jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+        html2pdf().from(element).set(opt).save();
+    }
   };
 
   const currentDate = new Date().toLocaleDateString('vi-VN', {
@@ -113,7 +125,7 @@ export function ReportClient({ data }: { data: SeoData }) {
             <h1 className="text-xl font-bold">Báo cáo SEO</h1>
           </div>
           <div className="flex flex-1 items-center justify-end space-x-4">
-            <Button onClick={handlePrint}>
+            <Button onClick={handleDownload}>
               <Download className="mr-2 h-4 w-4" />
               Tải Báo cáo
             </Button>
