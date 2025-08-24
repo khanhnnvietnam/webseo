@@ -80,7 +80,7 @@ const ReportItem: FC<{ check: SeoCheck<any>; title: ReactNode }> = ({ check, tit
         <div className="flex items-center space-x-4">
           <div>{STATUS_MAP[check.status].icon}</div>
           <div className="flex-1 text-left">
-            <p className="font-medium">{title}</p>
+            <div className="font-medium">{title}</div>
             <p className="text-sm text-muted-foreground">{check.message}</p>
           </div>
         </div>
