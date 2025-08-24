@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { ArrowRight, Loader2 } from 'lucide-react';
 
 const formSchema = z.object({
-  url: z.string().url({ message: 'Please enter a valid URL.' }),
+  url: z.string().url({ message: 'Vui lòng nhập một URL hợp lệ.' }),
 });
 
 export function UrlForm() {
@@ -44,7 +44,7 @@ export function UrlForm() {
                     placeholder="https://example.com"
                     {...field}
                     className="h-12 text-base"
-                    aria-label="Website URL"
+                    aria-label="URL trang web"
                   />
                 </FormControl>
                 <Button type="submit" size="lg" className="h-12" disabled={isSubmitting}>
@@ -52,11 +52,11 @@ export function UrlForm() {
                     <Loader2 className="h-5 w-5 animate-spin" />
                   ) : (
                     <>
-                      <span className="hidden sm:inline">Analyze</span>
+                      <span className="hidden sm:inline">Phân tích</span>
                       <ArrowRight className="h-5 w-5 sm:hidden" />
                     </>
                   )}
-                  <span className="sr-only">Analyze Website</span>
+                  <span className="sr-only">Phân tích trang web</span>
                 </Button>
               </div>
               <FormMessage />

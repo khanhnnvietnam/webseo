@@ -11,12 +11,12 @@ export default function Loading() {
         <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
           <div className="flex gap-4 items-center">
             <Logo />
-            <h1 className="text-xl font-bold">SEO Reportify</h1>
+            <h1 className="text-xl font-bold">Báo cáo SEO</h1>
           </div>
           <div className="flex flex-1 items-center justify-end space-x-4">
             <Button disabled>
               <Download className="mr-2 h-4 w-4" />
-              Download Report
+              Tải Báo cáo
             </Button>
           </div>
         </div>
@@ -45,7 +45,7 @@ export default function Loading() {
           <div className="grid gap-6 md:grid-cols-2">
             <Card>
               <CardHeader>
-                <CardTitle>On-Page SEO</CardTitle>
+                <CardTitle>SEO On-Page</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 {[...Array(5)].map((_, i) => (
@@ -58,7 +58,7 @@ export default function Loading() {
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle>Technical SEO</CardTitle>
+                <CardTitle>SEO Kỹ thuật</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 {[...Array(4)].map((_, i) => (
@@ -73,7 +73,7 @@ export default function Loading() {
         </div>
         <div className="flex items-center justify-center p-8 text-muted-foreground">
           <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-          <p className="text-lg">Analyzing your website, please wait...</p>
+          <p className="text-lg">Đang phân tích trang web của bạn, vui lòng đợi...</p>
         </div>
       </main>
     </div>

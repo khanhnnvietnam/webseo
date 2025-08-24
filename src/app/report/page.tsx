@@ -26,36 +26,36 @@ function generateMockData(url: string): SeoData {
 
   const onPage = {
     title: {
-      value: `Sample Title for ${url}`,
+      value: `Tiêu đề mẫu cho ${url}`,
       status: titleLength > 60 || titleLength < 30 ? 'improvement' : 'good',
-      message: `Title length is ${titleLength} characters. Recommended: 30-60.`,
+      message: `Độ dài tiêu đề là ${titleLength} ký tự. Khuyến nghị: 30-60.`,
     },
     metaDescription: {
-      value: 'This is a sample meta description to demonstrate the SEO analysis for the provided URL.',
+      value: 'Đây là mô tả meta mẫu để minh họa phân tích SEO cho URL được cung cấp.',
       status: descLength > 160 || descLength < 70 ? 'improvement' : 'good',
-      message: `Meta description length is ${descLength} characters. Recommended: 70-160.`,
+      message: `Độ dài mô tả meta là ${descLength} ký tự. Khuyến nghị: 70-160.`,
     },
     headings: {
       h1: {
-        value: Array(h1Count).fill('Example H1 Heading'),
+        value: Array(h1Count).fill('Tiêu đề H1 mẫu'),
         status: h1Count === 1 ? 'good' : 'error',
-        message: `Found ${h1Count} <h1> tag(s). Exactly one is recommended.`,
+        message: `Tìm thấy ${h1Count} thẻ <h1>. Khuyến nghị chính xác một thẻ.`,
       },
       h2: {
-        value: ['Sub-heading 1', 'Sub-heading 2'],
+        value: ['Tiêu đề phụ 1', 'Tiêu đề phụ 2'],
         status: 'good',
-        message: 'Found 2 <h2> tags.',
+        message: 'Tìm thấy 2 thẻ <h2>.',
       },
     },
     imageAlts: {
       value: { count: imgCount, missing: missingAlts },
       status: missingAlts > 0 ? 'improvement' : 'good',
-      message: `${missingAlts} of ${imgCount} images are missing alt text.`,
+      message: `${missingAlts} trên ${imgCount} hình ảnh thiếu văn bản thay thế.`,
     },
     keywordDensity: {
-      value: { keyword: 'example', density: 1.5 + random(urlSeed+8) },
+      value: { keyword: 'ví dụ', density: 1.5 + random(urlSeed+8) },
       status: 'good',
-      message: 'Keyword density is within the optimal range.',
+      message: 'Mật độ từ khóa nằm trong phạm vi tối ưu.',
     },
   };
   
@@ -64,33 +64,33 @@ function generateMockData(url: string): SeoData {
       mobile: {
         value: mobileScore,
         status: getStatus(mobileScore / 100),
-        message: `Mobile PageSpeed score is ${mobileScore}.`,
+        message: `Điểm PageSpeed trên di động là ${mobileScore}.`,
       },
       desktop: {
         value: desktopScore,
         status: getStatus(desktopScore / 100),
-        message: `Desktop PageSpeed score is ${desktopScore}.`,
+        message: `Điểm PageSpeed trên máy tính là ${desktopScore}.`,
       },
     },
     coreWebVitals: {
-      lcp: { value: 1.8 + random(urlSeed+9), status: 'good', message: 'Largest Contentful Paint is good.'},
-      inp: { value: 150 + random(urlSeed+10)*100, status: 'good', message: 'Interaction to Next Paint is good.'},
-      cls: { value: 0.05 + random(urlSeed+11)*0.1, status: 'good', message: 'Cumulative Layout Shift is good.'},
+      lcp: { value: 1.8 + random(urlSeed+9), status: 'good', message: 'Largest Contentful Paint tốt.'},
+      inp: { value: 150 + random(urlSeed+10)*100, status: 'good', message: 'Interaction to Next Paint tốt.'},
+      cls: { value: 0.05 + random(urlSeed+11)*0.1, status: 'good', message: 'Cumulative Layout Shift tốt.'},
     },
     ssl: {
       value: random(urlSeed + 12) > 0.05,
       status: random(urlSeed + 12) > 0.05 ? 'good' : 'error',
-      message: 'SSL certificate is valid and properly configured.',
+      message: 'Chứng chỉ SSL hợp lệ và được định cấu hình đúng.',
     },
     robotsTxt: {
       value: random(urlSeed + 13) > 0.1,
       status: random(urlSeed + 13) > 0.1 ? 'good' : 'error',
-      message: 'robots.txt file is present and accessible.',
+      message: 'Tệp robots.txt có mặt và có thể truy cập.',
     },
     sitemap: {
       value: random(urlSeed + 14) > 0.15,
       status: random(urlSeed + 14) > 0.15 ? 'good' : 'error',
-      message: 'XML Sitemap is present and correctly formatted.',
+      message: 'Sitemap XML có mặt và được định dạng chính xác.',
     },
   };
 

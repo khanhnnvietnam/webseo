@@ -15,6 +15,6 @@ export async function generateActionableInsights(
     return result.recommendations;
   } catch (error) {
     console.error('Error generating insights:', error);
-    return 'We could not generate AI-powered insights at this time. Please check your setup and try again.';
+    return 'Chúng tôi không thể tạo thông tin chi tiết do AI cung cấp vào lúc này. Vui lòng kiểm tra thiết lập của bạn và thử lại.';
   }
 }

@@ -16,17 +16,17 @@ const STATUS_MAP: Record<SeoStatus, { icon: ReactNode; color: string; text: stri
   good: {
     icon: <CheckCircle2 className="h-5 w-5 text-green-500" />,
     color: 'text-green-500',
-    text: 'Good',
+    text: 'Tốt',
   },
   improvement: {
     icon: <MessageCircleWarning className="h-5 w-5 text-yellow-500" />,
     color: 'text-yellow-500',
-    text: 'Needs Improvement',
+    text: 'Cần cải thiện',
   },
   error: {
     icon: <XCircle className="h-5 w-5 text-destructive" />,
     color: 'text-destructive',
-    text: 'Error',
+    text: 'Lỗi',
   },
 };
 
@@ -87,7 +87,7 @@ export function ReportClient({ data }: { data: SeoData }) {
     window.print();
   };
 
-  const currentDate = new Date().toLocaleDateString('en-US', {
+  const currentDate = new Date().toLocaleDateString('vi-VN', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -99,12 +99,12 @@ export function ReportClient({ data }: { data: SeoData }) {
         <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
           <div className="flex gap-4 items-center">
             <Logo />
-            <h1 className="text-xl font-bold">SEO Reportify</h1>
+            <h1 className="text-xl font-bold">Báo cáo SEO</h1>
           </div>
           <div className="flex flex-1 items-center justify-end space-x-4">
             <Button onClick={handlePrint}>
               <Download className="mr-2 h-4 w-4" />
-              Download Report
+              Tải Báo cáo
             </Button>
           </div>
         </div>
@@ -117,23 +117,23 @@ export function ReportClient({ data }: { data: SeoData }) {
             <div className="flex justify-between items-center border-b pb-4">
               <div className="flex gap-4 items-center">
                 <Logo />
-                <h1 className="text-2xl font-bold">SEO Reportify</h1>
+                <h1 className="text-2xl font-bold">Báo cáo SEO</h1>
               </div>
               <div className="text-right">
                 <p className="font-bold text-lg">{data.url}</p>
-                <p className="text-sm text-muted-foreground">Report date: {currentDate}</p>
+                <p className="text-sm text-muted-foreground">Ngày báo cáo: {currentDate}</p>
               </div>
             </div>
           </div>
           
           <div className="flex flex-col md:flex-row items-start justify-between mb-8 gap-6">
             <div>
-              <p className="text-sm font-medium text-primary">SEO Analysis Report</p>
+              <p className="text-sm font-medium text-primary">Báo cáo phân tích SEO</p>
               <h2 className="text-3xl font-bold tracking-tight text-foreground break-all">{data.url}</h2>
-              <p className="text-muted-foreground mt-1">Generated on {currentDate}</p>
+              <p className="text-muted-foreground mt-1">Tạo vào {currentDate}</p>
             </div>
             <div className="text-center">
-              <p className="text-sm font-medium text-muted-foreground mb-2">Overall Score</p>
+              <p className="text-sm font-medium text-muted-foreground mb-2">Điểm tổng thể</p>
               <ScoreGauge score={data.score} />
             </div>
           </div>
@@ -143,23 +143,23 @@ export function ReportClient({ data }: { data: SeoData }) {
           <div className="mt-8 grid gap-8 md:grid-cols-2">
             <Card>
               <CardHeader>
-                <CardTitle className='flex items-center gap-2'><Tags /> On-Page SEO</CardTitle>
-                <CardDescription>Analysis of content and HTML source code elements.</CardDescription>
+                <CardTitle className='flex items-center gap-2'><Tags /> SEO On-Page</CardTitle>
+                <CardDescription>Phân tích nội dung và các yếu tố mã nguồn HTML.</CardDescription>
               </CardHeader>
               <CardContent className="divide-y">
-                <ReportItem status={data.onPage.title.status} title="Title Tag">
+                <ReportItem status={data.onPage.title.status} title="Thẻ tiêu đề">
                   {data.onPage.title.message}
                 </ReportItem>
-                <ReportItem status={data.onPage.metaDescription.status} title="Meta Description">
+                <ReportItem status={data.onPage.metaDescription.status} title="Mô tả Meta">
                   {data.onPage.metaDescription.message}
                 </ReportItem>
-                <ReportItem status={data.onPage.headings.h1.status} title="H1 Headings">
+                <ReportItem status={data.onPage.headings.h1.status} title="Tiêu đề H1">
                   {data.onPage.headings.h1.message}
                 </ReportItem>
-                <ReportItem status={data.onPage.imageAlts.status} title="Image ALT Attributes">
+                <ReportItem status={data.onPage.imageAlts.status} title="Thuộc tính ALT của hình ảnh">
                   {data.onPage.imageAlts.message}
                 </ReportItem>
-                <ReportItem status={data.onPage.keywordDensity.status} title="Keyword Density">
+                <ReportItem status={data.onPage.keywordDensity.status} title="Mật độ từ khóa">
                   {data.onPage.keywordDensity.message}
                 </ReportItem>
               </CardContent>
@@ -167,35 +167,35 @@ export function ReportClient({ data }: { data: SeoData }) {
 
             <Card>
               <CardHeader>
-                <CardTitle className='flex items-center gap-2'><Server/> Technical SEO</CardTitle>
-                <CardDescription>Analysis of technical aspects affecting search visibility.</CardDescription>
+                <CardTitle className='flex items-center gap-2'><Server/> SEO Kỹ thuật</CardTitle>
+                <CardDescription>Phân tích các khía cạnh kỹ thuật ảnh hưởng đến khả năng hiển thị trên công cụ tìm kiếm.</CardDescription>
               </CardHeader>
               <CardContent className="divide-y">
                 <div className='flex gap-4 justify-around text-center p-4'>
                     <div>
-                        <div className='flex items-center justify-center gap-2 text-muted-foreground'><Smartphone size={16}/> Mobile</div>
+                        <div className='flex items-center justify-center gap-2 text-muted-foreground'><Smartphone size={16}/> Di động</div>
                         <p className={`text-3xl font-bold ${STATUS_MAP[data.technical.pageSpeed.mobile.status].color}`}>{data.technical.pageSpeed.mobile.value}</p>
                     </div>
                      <Separator orientation="vertical" className="h-auto" />
                     <div>
-                        <div className='flex items-center justify-center gap-2 text-muted-foreground'><GaugeCircle size={16}/> Desktop</div>
+                        <div className='flex items-center justify-center gap-2 text-muted-foreground'><GaugeCircle size={16}/> Máy tính</div>
                         <p className={`text-3xl font-bold ${STATUS_MAP[data.technical.pageSpeed.desktop.status].color}`}>{data.technical.pageSpeed.desktop.value}</p>
                     </div>
                 </div>
-                 <ReportItem status={data.technical.ssl.status} title="SSL Certificate">
-                   {data.technical.ssl.value ? 'SSL is enabled and valid.' : 'SSL certificate not found or is invalid.'}
+                 <ReportItem status={data.technical.ssl.status} title="Chứng chỉ SSL">
+                   {data.technical.ssl.value ? 'SSL được bật và hợp lệ.' : 'Không tìm thấy hoặc chứng chỉ SSL không hợp lệ.'}
                 </ReportItem>
                 <ReportItem status={data.technical.robotsTxt.status} title="robots.txt">
-                   {data.technical.robotsTxt.value ? 'robots.txt file found.' : 'robots.txt file is missing.'}
+                   {data.technical.robotsTxt.value ? 'Đã tìm thấy tệp robots.txt.' : 'Thiếu tệp robots.txt.'}
                 </ReportItem>
-                <ReportItem status={data.technical.sitemap.status} title="XML Sitemap">
-                   {data.technical.sitemap.value ? 'XML Sitemap found.' : 'XML Sitemap is missing.'}
+                <ReportItem status={data.technical.sitemap.status} title="Sitemap XML">
+                   {data.technical.sitemap.value ? 'Đã tìm thấy Sitemap XML.' : 'Thiếu Sitemap XML.'}
                 </ReportItem>
               </CardContent>
             </Card>
           </div>
           <div className="mt-8 text-center text-sm text-muted-foreground print:hidden">
-              <p>SEO Reportify &copy; {new Date().getFullYear()}</p>
+              <p>Báo cáo SEO &copy; {new Date().getFullYear()}</p>
           </div>
         </div>
       </main>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Lightbulb, Wand2 } from 'lucide-react';
+import { Wand2 } from 'lucide-react';
 
 import { generateActionableInsights } from '@/lib/actions';
 import type { OnPageData, TechnicalData } from '@/lib/types';
@@ -31,10 +31,10 @@ export function ActionableInsights({ onPageData, technicalData }: ActionableInsi
     <Card className="bg-primary/5 border-primary/20 print:bg-transparent print:border-none print:shadow-none">
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-primary">
-          <Wand2 /> AI Actionable Insights
+          <Wand2 /> Thông tin chi tiết hữu ích từ AI
         </CardTitle>
         <CardDescription>
-          AI-powered recommendations to improve your SEO score, focusing on the most impactful changes.
+          Các đề xuất do AI cung cấp để cải thiện điểm SEO của bạn, tập trung vào những thay đổi có tác động lớn nhất.
         </CardDescription>
       </CardHeader>
       <CardContent>

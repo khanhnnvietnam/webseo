@@ -7,8 +7,8 @@ import { cn } from '@/lib/utils';
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
-  title: 'SEO Reportify',
-  description: 'Analyze SEO metrics and generate professional reports.',
+  title: 'Báo cáo SEO',
+  description: 'Phân tích các chỉ số SEO và tạo báo cáo chuyên nghiệp.',
 };
 
 export default function RootLayout({
@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="vi" suppressHydrationWarning>
       <body className={cn('min-h-screen bg-background font-sans antialiased', inter.variable)}>
         {children}
         <Toaster />
