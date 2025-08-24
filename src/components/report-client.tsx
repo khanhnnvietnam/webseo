@@ -3,14 +3,13 @@
 import type { FC, ReactNode } from 'react';
 import type { SeoData, SeoStatus } from '@/lib/types';
 
-import { BarChart, CheckCircle2, Download, Lightbulb, MessageCircleWarning, Server, ShieldCheck, Siren, Smartphone, Speed, Tags, Workflow, XCircle } from 'lucide-react';
+import { CheckCircle2, Download, GaugeCircle, MessageCircleWarning, Server, Smartphone, Tags, XCircle } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip as RechartsTooltip } from 'recharts';
 
 import { Logo } from './logo';
 import { ActionableInsights } from './actionable-insights';
-import { Badge } from './ui/badge';
 import { Separator } from './ui/separator';
 
 const STATUS_MAP: Record<SeoStatus, { icon: ReactNode; color: string; text: string }> = {
@@ -179,7 +178,7 @@ export function ReportClient({ data }: { data: SeoData }) {
                     </div>
                      <Separator orientation="vertical" className="h-auto" />
                     <div>
-                        <div className='flex items-center justify-center gap-2 text-muted-foreground'><Speed size={16}/> Desktop</div>
+                        <div className='flex items-center justify-center gap-2 text-muted-foreground'><GaugeCircle size={16}/> Desktop</div>
                         <p className={`text-3xl font-bold ${STATUS_MAP[data.technical.pageSpeed.desktop.status].color}`}>{data.technical.pageSpeed.desktop.value}</p>
                     </div>
                 </div>
