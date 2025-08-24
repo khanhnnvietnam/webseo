@@ -24,6 +24,15 @@ function generateMockData(url: string): SeoData {
   const mobileScore = 50 + Math.floor(random(urlSeed + 6) * 50);
   const desktopScore = 60 + Math.floor(random(urlSeed + 7) * 40);
 
+  const wordCount = 300 + Math.floor(random(urlSeed + 15) * 1200);
+  const internalLinks = 2 + Math.floor(random(urlSeed + 16) * 10);
+  const externalLinks = 1 + Math.floor(random(urlSeed + 17) * 5);
+  const brokenLinks = Math.floor(random(urlSeed + 18) * 3);
+  const isMobileFriendly = random(urlSeed + 19) > 0.1;
+  const hasSchema = random(urlSeed + 20) > 0.3;
+  const hasCanonical = random(urlSeed + 21) > 0.2;
+
+
   const onPage = {
     title: {
       value: `Tiêu đề mẫu cho ${url}`,
@@ -63,6 +72,18 @@ function generateMockData(url: string): SeoData {
       message: 'Mật độ từ khóa nằm trong phạm vi tối ưu.',
       details: 'Mật độ từ khóa của bạn cho thấy việc sử dụng thuật ngữ một cách tự nhiên trong toàn bộ nội dung, đây là điều tốt cho SEO.',
     },
+    contentLength: {
+      value: wordCount,
+      status: wordCount < 500 ? 'improvement' : 'good',
+      message: `Trang chứa ${wordCount} từ.`,
+      details: 'Nội dung dài hơn (trên 500 từ) có xu hướng xếp hạng tốt hơn vì nó cung cấp nhiều giá trị hơn cho người đọc. Hãy xem xét việc mở rộng nội dung của bạn với thông tin hữu ích và có liên quan.'
+    },
+    links: {
+      value: { internal: internalLinks, external: externalLinks, broken: brokenLinks },
+      status: brokenLinks > 0 ? 'error' : (internalLinks > 0 && externalLinks > 0 ? 'good' : 'improvement'),
+      message: `Tìm thấy ${internalLinks} liên kết nội bộ, ${externalLinks} liên kết bên ngoài và ${brokenLinks} liên kết hỏng.`,
+      details: 'Liên kết nội bộ giúp các công cụ tìm kiếm hiểu cấu trúc trang web của bạn. Liên kết bên ngoài đến các trang web có uy tín có thể tăng độ tin cậy. Các liên kết hỏng tạo ra trải nghiệm người dùng xấu và nên được sửa chữa.'
+    }
   };
   
   const technical = {
@@ -88,30 +109,54 @@ function generateMockData(url: string): SeoData {
     ssl: {
       value: random(urlSeed + 12) > 0.05,
       status: random(urlSeed + 12) > 0.05 ? 'good' : 'error',
-      message: 'Chứng chỉ SSL hợp lệ và được định cấu hình đúng.',
-      details: 'SSL (HTTPS) mã hóa dữ liệu giữa trang web của bạn và khách truy cập, điều này rất cần thiết cho lòng tin và bảo mật. Nó cũng là một yếu tố xếp hạng của Google. Trang web của bạn đã được định cấu hình chính xác.',
+      message: random(urlSeed + 12) > 0.05 ? 'Chứng chỉ SSL hợp lệ và được định cấu hình đúng.' : 'Không tìm thấy chứng chỉ SSL hoặc đã hết hạn.',
+      details: 'SSL (HTTPS) mã hóa dữ liệu giữa trang web của bạn và khách truy cập, điều này rất cần thiết cho lòng tin và bảo mật. Nó cũng là một yếu tố xếp hạng của Google.',
     },
     robotsTxt: {
       value: random(urlSeed + 13) > 0.1,
       status: random(urlSeed + 13) > 0.1 ? 'good' : 'error',
-      message: 'Tệp robots.txt có mặt và có thể truy cập.',
+      message: random(urlSeed + 13) > 0.1 ? 'Tệp robots.txt có mặt và có thể truy cập.' : 'Không tìm thấy tệp robots.txt.',
       details: 'Tệp robots.txt hướng dẫn các công cụ tìm kiếm cách thu thập thông tin trang web của bạn. Việc có một tệp được định cấu hình đúng là rất quan trọng để đảm bảo các trang quan trọng được lập chỉ mục.',
     },
     sitemap: {
       value: random(urlSeed + 14) > 0.15,
       status: random(urlSeed + 14) > 0.15 ? 'good' : 'error',
-      message: 'Sitemap XML có mặt và được định dạng chính xác.',
-      details: 'Sitemap XML giúp các công cụ tìm kiếm khám phá tất cả các trang trên trang web của bạn. Nó rất quan trọng đối với các trang web lớn hoặc các trang có cấu trúc phức tạp. Sitemap của bạn đã được thiết lập.',
+      message: random(urlSeed + 14) > 0.15 ? 'Sitemap XML có mặt và được định dạng chính xác.' : 'Không tìm thấy sitemap XML.',
+      details: 'Sitemap XML giúp các công cụ tìm kiếm khám phá tất cả các trang trên trang web của bạn. Nó rất quan trọng đối với các trang web lớn hoặc các trang có cấu trúc phức tạp.',
     },
+    mobileFriendly: {
+      value: isMobileFriendly,
+      status: isMobileFriendly ? 'good' : 'error',
+      message: isMobileFriendly ? 'Trang web thân thiện với thiết bị di động.' : 'Trang web không thân thiện với thiết bị di động.',
+      details: 'Google ưu tiên các trang web thân thiện với thiết bị di động. Một thiết kế không đáp ứng có thể làm tổn hại đến thứ hạng của bạn và mang lại trải nghiệm người dùng kém trên điện thoại thông minh và máy tính bảng.',
+    },
+    structuredData: {
+      value: hasSchema ? ['Article', 'BreadcrumbList'] : [],
+      status: hasSchema ? 'good' : 'improvement',
+      message: hasSchema ? 'Tìm thấy dữ liệu có cấu trúc.' : 'Không tìm thấy dữ liệu có cấu trúc.',
+      details: 'Dữ liệu có cấu trúc (Schema markup) giúp các công cụ tìm kiếm hiểu nội dung của bạn và có thể dẫn đến các đoạn mã chi tiết (rich snippets) trong kết quả tìm kiếm, có thể cải thiện tỷ lệ nhấp chuột.',
+    },
+    canonicalUrl: {
+      value: hasCanonical ? url : null,
+      status: hasCanonical ? 'good' : 'improvement',
+      message: hasCanonical ? 'Thẻ Canonical có mặt.' : 'Thiếu thẻ canonical.',
+      details: 'Thẻ canonical ngăn chặn các vấn đề về nội dung trùng lặp bằng cách chỉ định phiên bản "chính tắc" hoặc "ưa thích" của một trang web. Điều quan trọng là phải có một thẻ cho mỗi trang.',
+    }
   };
 
-  const score = (Object.values(onPage).flat().concat(Object.values(technical).flat()))
-    .reduce((acc: number, check: any) => {
-        if (typeof check !== 'object' || check === null || !('status' in check)) return acc;
-        if(check.status === 'good') return acc + 1;
-        if(check.status === 'improvement') return acc + 0.5;
-        return acc;
-    }, 0) / 10 * 100;
+  const allChecks = [
+      ...Object.values(onPage),
+      ...Object.values(onPage.headings),
+      ...Object.values(technical),
+      ...Object.values(technical.pageSpeed),
+      ...Object.values(technical.coreWebVitals)
+    ].filter(check => typeof check === 'object' && check !== null && 'status' in check);
+
+  const score = allChecks.reduce((acc: number, check: any) => {
+      if(check.status === 'good') return acc + 1;
+      if(check.status === 'improvement') return acc + 0.5;
+      return acc;
+  }, 0) / allChecks.length * 100;
 
   return { url, onPage, technical, score: Math.round(score) };
 }

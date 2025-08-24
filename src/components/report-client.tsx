@@ -3,7 +3,7 @@
 import type { FC, ReactNode } from 'react';
 import type { SeoData, SeoStatus, SeoCheck } from '@/lib/types';
 
-import { CheckCircle2, Download, GaugeCircle, MessageCircleWarning, Server, Smartphone, Tags, XCircle } from 'lucide-react';
+import { CheckCircle2, Download, GaugeCircle, MessageCircleWarning, Server, Smartphone, Tags, XCircle, Link, FileText, Code, Globe } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip as RechartsTooltip } from 'recharts';
@@ -158,12 +158,14 @@ export function ReportClient({ data }: { data: SeoData }) {
                 <CardDescription>Phân tích nội dung và các yếu tố mã nguồn HTML.</CardDescription>
               </CardHeader>
               <CardContent>
-                <Accordion type="multiple">
+                <Accordion type="multiple" defaultValue={['Thẻ tiêu đề']}>
                   <ReportItem check={data.onPage.title} title="Thẻ tiêu đề"/>
                   <ReportItem check={data.onPage.metaDescription} title="Mô tả Meta"/>
                   <ReportItem check={data.onPage.headings.h1} title="Tiêu đề H1"/>
                   <ReportItem check={data.onPage.imageAlts} title="Thuộc tính ALT của hình ảnh"/>
                   <ReportItem check={data.onPage.keywordDensity} title="Mật độ từ khóa"/>
+                  <ReportItem check={data.onPage.contentLength} title={<div className="flex items-center gap-2"><FileText size={16}/> Độ dài nội dung</div>} />
+                  <ReportItem check={data.onPage.links} title={<div className="flex items-center gap-2"><Link size={16}/> Phân tích liên kết</div>} />
                 </Accordion>
               </CardContent>
             </Card>
@@ -189,6 +191,9 @@ export function ReportClient({ data }: { data: SeoData }) {
                   <ReportItem check={data.technical.ssl} title="Chứng chỉ SSL"/>
                   <ReportItem check={data.technical.robotsTxt} title="robots.txt"/>
                   <ReportItem check={data.technical.sitemap} title="Sitemap XML"/>
+                  <ReportItem check={data.technical.mobileFriendly} title={<div className="flex items-center gap-2"><Smartphone size={16}/> Thân thiện với di động</div>} />
+                  <ReportItem check={data.technical.structuredData} title={<div className="flex items-center gap-2"><Code size={16}/> Dữ liệu có cấu trúc</div>} />
+                  <ReportItem check={data.technical.canonicalUrl} title={<div className="flex items-center gap-2"><Globe size={16}/> URL chính tắc</div>} />
                  </Accordion>
               </CardContent>
             </Card>

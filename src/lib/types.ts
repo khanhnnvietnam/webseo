@@ -16,6 +16,8 @@ export interface OnPageData {
   };
   imageAlts: SeoCheck<{ count: number; missing: number }>;
   keywordDensity: SeoCheck<{ keyword: string; density: number }>;
+  contentLength: SeoCheck<number>;
+  links: SeoCheck<{ internal: number; external: number; broken: number }>;
 }
 
 export interface TechnicalData {
@@ -31,6 +33,9 @@ export interface TechnicalData {
   ssl: SeoCheck<boolean>;
   robotsTxt: SeoCheck<boolean>;
   sitemap: SeoCheck<boolean>;
+  mobileFriendly: SeoCheck<boolean>;
+  structuredData: SeoCheck<string[]>;
+  canonicalUrl: SeoCheck<string | null>;
 }
 
 export interface SeoData {
