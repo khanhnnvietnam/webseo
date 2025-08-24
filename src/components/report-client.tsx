@@ -1,12 +1,14 @@
 'use client';
 
 import type { FC, ReactNode } from 'react';
-import type { SeoData, SeoStatus } from '@/lib/types';
+import type { SeoData, SeoStatus, SeoCheck } from '@/lib/types';
 
 import { CheckCircle2, Download, GaugeCircle, MessageCircleWarning, Server, Smartphone, Tags, XCircle } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip as RechartsTooltip } from 'recharts';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+
 
 import { Logo } from './logo';
 import { ActionableInsights } from './actionable-insights';
@@ -72,14 +74,23 @@ const ScoreGauge: FC<{ score: number }> = ({ score }) => {
   );
 };
 
-const ReportItem: FC<{ status: SeoStatus; title: ReactNode; children: ReactNode }> = ({ status, title, children }) => (
-  <div className="flex items-start space-x-4 py-2">
-    <div>{STATUS_MAP[status].icon}</div>
-    <div className="flex-1">
-      <p className="font-medium">{title}</p>
-      <p className="text-sm text-muted-foreground">{children}</p>
-    </div>
-  </div>
+const ReportItem: FC<{ check: SeoCheck<any>; title: ReactNode }> = ({ check, title }) => (
+    <AccordionItem value={title?.toString() ?? ''}>
+      <AccordionTrigger className='py-3'>
+        <div className="flex items-center space-x-4">
+          <div>{STATUS_MAP[check.status].icon}</div>
+          <div className="flex-1 text-left">
+            <p className="font-medium">{title}</p>
+            <p className="text-sm text-muted-foreground">{check.message}</p>
+          </div>
+        </div>
+      </AccordionTrigger>
+      <AccordionContent>
+        <div className="pl-9 text-muted-foreground text-sm border-l-2 border-border ml-2.5 pl-6 py-2">
+         {check.details}
+        </div>
+      </AccordionContent>
+    </AccordionItem>
 );
 
 export function ReportClient({ data }: { data: SeoData }) {
@@ -146,22 +157,14 @@ export function ReportClient({ data }: { data: SeoData }) {
                 <CardTitle className='flex items-center gap-2'><Tags /> SEO On-Page</CardTitle>
                 <CardDescription>Phân tích nội dung và các yếu tố mã nguồn HTML.</CardDescription>
               </CardHeader>
-              <CardContent className="divide-y">
-                <ReportItem status={data.onPage.title.status} title="Thẻ tiêu đề">
-                  {data.onPage.title.message}
-                </ReportItem>
-                <ReportItem status={data.onPage.metaDescription.status} title="Mô tả Meta">
-                  {data.onPage.metaDescription.message}
-                </ReportItem>
-                <ReportItem status={data.onPage.headings.h1.status} title="Tiêu đề H1">
-                  {data.onPage.headings.h1.message}
-                </ReportItem>
-                <ReportItem status={data.onPage.imageAlts.status} title="Thuộc tính ALT của hình ảnh">
-                  {data.onPage.imageAlts.message}
-                </ReportItem>
-                <ReportItem status={data.onPage.keywordDensity.status} title="Mật độ từ khóa">
-                  {data.onPage.keywordDensity.message}
-                </ReportItem>
+              <CardContent>
+                <Accordion type="multiple">
+                  <ReportItem check={data.onPage.title} title="Thẻ tiêu đề"/>
+                  <ReportItem check={data.onPage.metaDescription} title="Mô tả Meta"/>
+                  <ReportItem check={data.onPage.headings.h1} title="Tiêu đề H1"/>
+                  <ReportItem check={data.onPage.imageAlts} title="Thuộc tính ALT của hình ảnh"/>
+                  <ReportItem check={data.onPage.keywordDensity} title="Mật độ từ khóa"/>
+                </Accordion>
               </CardContent>
             </Card>
 
@@ -170,8 +173,8 @@ export function ReportClient({ data }: { data: SeoData }) {
                 <CardTitle className='flex items-center gap-2'><Server/> SEO Kỹ thuật</CardTitle>
                 <CardDescription>Phân tích các khía cạnh kỹ thuật ảnh hưởng đến khả năng hiển thị trên công cụ tìm kiếm.</CardDescription>
               </CardHeader>
-              <CardContent className="divide-y">
-                <div className='flex gap-4 justify-around text-center p-4'>
+              <CardContent>
+                 <div className='flex gap-4 justify-around text-center p-4 border-b mb-2'>
                     <div>
                         <div className='flex items-center justify-center gap-2 text-muted-foreground'><Smartphone size={16}/> Di động</div>
                         <p className={`text-3xl font-bold ${STATUS_MAP[data.technical.pageSpeed.mobile.status].color}`}>{data.technical.pageSpeed.mobile.value}</p>
@@ -182,15 +185,11 @@ export function ReportClient({ data }: { data: SeoData }) {
                         <p className={`text-3xl font-bold ${STATUS_MAP[data.technical.pageSpeed.desktop.status].color}`}>{data.technical.pageSpeed.desktop.value}</p>
                     </div>
                 </div>
-                 <ReportItem status={data.technical.ssl.status} title="Chứng chỉ SSL">
-                   {data.technical.ssl.value ? 'SSL được bật và hợp lệ.' : 'Không tìm thấy hoặc chứng chỉ SSL không hợp lệ.'}
-                </ReportItem>
-                <ReportItem status={data.technical.robotsTxt.status} title="robots.txt">
-                   {data.technical.robotsTxt.value ? 'Đã tìm thấy tệp robots.txt.' : 'Thiếu tệp robots.txt.'}
-                </ReportItem>
-                <ReportItem status={data.technical.sitemap.status} title="Sitemap XML">
-                   {data.technical.sitemap.value ? 'Đã tìm thấy Sitemap XML.' : 'Thiếu Sitemap XML.'}
-                </ReportItem>
+                 <Accordion type="multiple">
+                  <ReportItem check={data.technical.ssl} title="Chứng chỉ SSL"/>
+                  <ReportItem check={data.technical.robotsTxt} title="robots.txt"/>
+                  <ReportItem check={data.technical.sitemap} title="Sitemap XML"/>
+                 </Accordion>
               </CardContent>
             </Card>
           </div>

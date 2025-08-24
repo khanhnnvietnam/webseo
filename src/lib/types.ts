@@ -4,6 +4,7 @@ export interface SeoCheck<T> {
   value: T;
   status: SeoStatus;
   message: string;
+  details: string;
 }
 
 export interface OnPageData {
