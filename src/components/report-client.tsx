@@ -2,7 +2,6 @@
 
 import type { FC, ReactNode } from 'react';
 import type { SeoData, SeoStatus, SeoCheck } from '@/lib/types';
-import html2pdf from 'html2pdf.js';
 
 import { CheckCircle2, Download, GaugeCircle, MessageCircleWarning, Server, Smartphone, Tags, XCircle, Link, FileText, Code, Globe } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -95,9 +94,10 @@ const ReportItem: FC<{ check: SeoCheck<any>; title: ReactNode }> = ({ check, tit
 );
 
 export function ReportClient({ data }: { data: SeoData }) {
-  const handleDownload = () => {
+  const handleDownload = async () => {
     const element = document.getElementById('printable-area');
     if (element) {
+        const html2pdf = (await import('html2pdf.js')).default;
         const sanitizedUrl = data.url.replace(/[^a-z0-9]/gi, '_').toLowerCase();
         const opt = {
             margin:       0.5,
